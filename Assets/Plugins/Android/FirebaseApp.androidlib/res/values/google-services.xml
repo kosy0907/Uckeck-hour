@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id">
+  <string name="gcm_defaultSenderId" translatable="false">789999553291</string>
+  <string name="google_storage_bucket" translatable="false">ucheck-hour.appspot.com</string>
+  <string name="project_id" translatable="false">ucheck-hour</string>
+  <string name="google_api_key" translatable="false">AIzaSyBJELNUu11Pqmqdyj1VNQXoi763Z1xLEG4</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBJELNUu11Pqmqdyj1VNQXoi763Z1xLEG4</string>
+  <string name="google_app_id" translatable="false">1:789999553291:android:663cfe945b0d6bc526300e</string>
+  <string name="default_web_client_id" translatable="false">789999553291-ckgf5892a9dnl6074k3vfps2v01768ge.apps.googleusercontent.com</string>
+</resources>
