@@ -160,7 +160,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4353972167979376, guid: 6717c7c2d677a9f439f502029ec5b22a, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4353972167979376, guid: 6717c7c2d677a9f439f502029ec5b22a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -410,14 +410,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 572910488}
-  m_LocalRotation: {x: 0.49318287, y: 0, z: 0, w: 0.8699257}
-  m_LocalPosition: {x: 0, y: 22.34, z: -13.2}
+  m_LocalRotation: {x: 0.5468328, y: 0, z: 0, w: 0.8372418}
+  m_LocalPosition: {x: 0, y: 17.8, z: -7.58}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 59.1, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 66.3, y: 0, z: 0}
 --- !u!1001 &591148752
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -695,7 +695,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   planeDistance: 0
+  clickOffset: {x: 0, y: 0, z: 0}
   carHalfSize: 0.5
+  validBackPos: {x: -Infinity, y: -Infinity, z: -Infinity}
+  validFrontPos: {x: Infinity, y: Infinity, z: Infinity}
   smoothTime: 0.1
 --- !u!65 &951160906
 BoxCollider:
@@ -708,8 +711,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 3.92}
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Size: {x: 1, y: 1, z: 4.5}
+  m_Center: {x: 0, y: 0.4, z: 0}
 --- !u!1 &1070330625 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1646981259178978, guid: 388d83314c9e51c40956fb6908979eee, type: 3}
@@ -728,7 +731,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   planeDistance: 0
+  clickOffset: {x: 0, y: 0, z: 0}
   carHalfSize: 0.5
+  validBackPos: {x: -Infinity, y: -Infinity, z: -Infinity}
+  validFrontPos: {x: Infinity, y: Infinity, z: Infinity}
   smoothTime: 0.1
 --- !u!65 &1070330627
 BoxCollider:
@@ -741,8 +747,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.66, z: 2.21}
-  m_Center: {x: 0, y: 0.12, z: 0}
+  m_Size: {x: 1, y: 0.58, z: 2.2}
+  m_Center: {x: 0, y: 0.29, z: 0}
 --- !u!1 &1100106176
 GameObject:
   m_ObjectHideFlags: 0
@@ -1071,7 +1077,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4870167790249810, guid: 7500aebe3382441458c34a315bb6842b, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4870167790249810, guid: 7500aebe3382441458c34a315bb6842b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1125,6 +1131,10 @@ PrefabInstance:
     - target: {fileID: 1075041822531538, guid: 6d54332e11f957a43984db1df5538f5b, type: 3}
       propertyPath: m_Name
       value: road_4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1075041822531538, guid: 6d54332e11f957a43984db1df5538f5b, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4897468664260548, guid: 6d54332e11f957a43984db1df5538f5b, type: 3}
       propertyPath: m_RootOrder
@@ -1295,7 +1305,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   planeDistance: 0
+  clickOffset: {x: 0, y: 0, z: 0}
   carHalfSize: 0.5
+  validBackPos: {x: -Infinity, y: -Infinity, z: -Infinity}
+  validFrontPos: {x: Infinity, y: Infinity, z: Infinity}
   smoothTime: 0.1
 --- !u!65 &1616484431
 BoxCollider:
@@ -1308,7 +1321,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.58, z: 2.3}
+  m_Size: {x: 1, y: 0.58, z: 2.5}
   m_Center: {x: 0, y: 0.29, z: 0}
 --- !u!1 &1685333531 stripped
 GameObject:
@@ -1328,7 +1341,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   planeDistance: 0
+  clickOffset: {x: 0, y: 0, z: 0}
   carHalfSize: 0.5
+  validBackPos: {x: -Infinity, y: -Infinity, z: -Infinity}
+  validFrontPos: {x: Infinity, y: Infinity, z: Infinity}
   smoothTime: 0.1
 --- !u!65 &1685333533
 BoxCollider:
@@ -1341,8 +1357,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.51, z: 2.31}
-  m_Center: {x: 0, y: 0.28, z: 0}
+  m_Size: {x: 1, y: 0.58, z: 2.5}
+  m_Center: {x: 0, y: 0.29, z: 0}
 --- !u!1001 &1695733214
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1442,7 +1458,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   planeDistance: 0
+  clickOffset: {x: 0, y: 0, z: 0}
   carHalfSize: 0.5
+  validBackPos: {x: -Infinity, y: -Infinity, z: -Infinity}
+  validFrontPos: {x: Infinity, y: Infinity, z: Infinity}
   smoothTime: 0.1
 --- !u!65 &2099089566
 BoxCollider:
@@ -1455,5 +1474,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.81, z: 2.26}
-  m_Center: {x: 0, y: 0.08, z: 0}
+  m_Size: {x: 1, y: 0.58, z: 2.5}
+  m_Center: {x: 0, y: 0.29, z: 0}

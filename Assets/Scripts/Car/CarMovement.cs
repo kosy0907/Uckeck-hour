@@ -24,6 +24,8 @@ public class CarMovement : MonoBehaviour
 
     bool inputEnabled = true;
 
+    bool isDrag = false;
+
     void Start()
     {
         col = GetComponent<BoxCollider>();
@@ -35,7 +37,32 @@ public class CarMovement : MonoBehaviour
 
     void Update()
     {
+        GotoValidPosition();
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
+    }
+
+    void GotoValidPosition()
+    {
+        if (transform.position.z > validFrontPos.z + 0.25f)
+        {
+            targetPosition = new Vector3(transform.position.x, transform.position.y, validFrontPos.z);
+            isDrag = false;
+        }
+        else if (transform.position.z < validBackPos.z - 0.25f)
+        {
+            targetPosition = new Vector3(transform.position.x, transform.position.y, validBackPos.z);
+            isDrag = false;
+        }
+        else if (transform.position.x > validFrontPos.x + 0.25f)
+        {
+            targetPosition = new Vector3(validFrontPos.x, transform.position.y, transform.position.z);
+            isDrag = false;
+        }
+        else if (transform.position.x < validBackPos.x - 0.25f)
+        {
+            targetPosition = new Vector3(validBackPos.x, transform.position.y, transform.position.z);
+            isDrag = false;
+        }
     }
 
     void OnDrawGizmos()
@@ -55,6 +82,8 @@ public class CarMovement : MonoBehaviour
             clickOffset = transform.position - ray.GetPoint(planeDistance);
         }
 
+        isDrag = true;
+
         GetValidMoveRange();
     }
 
@@ -65,9 +94,39 @@ public class CarMovement : MonoBehaviour
 
         Ray ray = GetScreenPointToRay();
 
-        if (clickPlane.Raycast(ray, out planeDistance))
+        if (isDrag == true)
         {
-            MoveCar(ray.GetPoint(planeDistance));
+
+            if (clickPlane.Raycast(ray, out planeDistance))
+            {
+                MoveCar(ray.GetPoint(planeDistance));
+                Vector3 offsetPosition = ray.GetPoint(planeDistance) + clickOffset;
+
+                print(offsetPosition);
+                Vector3 lockedPosition = LockPositionToLocalForwardAxis(offsetPosition);
+
+                switch (orientation)
+                {
+                    case Orientation.NORTH:
+                    case Orientation.SOUTH:
+                        if (offsetPosition.z > 0 || offsetPosition.z < 0)
+                        {
+                            print("Check");
+                            Vector3 bouncePosition = SnapToGrid(ClampToBouncePosition(lockedPosition));
+                            targetPosition = bouncePosition;
+                        }
+                        break;
+                    case Orientation.EAST:
+                    case Orientation.WEST:
+                        if (offsetPosition.x > 0 || offsetPosition.x < 0)
+                        {
+                            Vector3 bouncePosition = SnapToGrid(ClampToBouncePosition(lockedPosition));
+                            targetPosition = bouncePosition;
+                            return;
+                        }
+                        break;
+                }
+            }
         }
     }
 
@@ -75,6 +134,8 @@ public class CarMovement : MonoBehaviour
     {
         if (!inputEnabled)
             return;
+
+        GotoValidPosition();
 
         validBackPos = Vector3.negativeInfinity;
         validFrontPos = Vector3.positiveInfinity;
@@ -171,6 +232,26 @@ public class CarMovement : MonoBehaviour
                 break;
             case Orientation.WEST:
                 pos.x = Mathf.Clamp(pos.x, validFrontPos.x, validBackPos.x);
+                break;
+        }
+
+        return Utils.RoundVector(pos);
+    }
+    Vector3 ClampToBouncePosition(Vector3 pos)
+    {
+        switch (orientation)
+        {
+            case Orientation.NORTH:
+                pos.z = Mathf.Clamp(pos.z, validBackPos.z - 0.5f, validFrontPos.z + 1f);
+                break;
+            case Orientation.SOUTH:
+                pos.z = Mathf.Clamp(pos.z, validFrontPos.z - 0.5f, validBackPos.z + 1f);
+                break;
+            case Orientation.EAST:
+                pos.x = Mathf.Clamp(pos.x, validBackPos.x - 0.5f, validFrontPos.x + 1f);
+                break;
+            case Orientation.WEST:
+                pos.x = Mathf.Clamp(pos.x, validFrontPos.x - 0.5f, validBackPos.x + 1f);
                 break;
         }
 
