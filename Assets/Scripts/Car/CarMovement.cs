@@ -47,25 +47,59 @@ public class CarMovement : MonoBehaviour
 
     void GotoValidPosition()
     {
-        if (transform.position.z > validFrontPos.z + 0.3f)
+        if (validBackPos != null && validFrontPos != null)
         {
-            targetPosition = new Vector3(transform.position.x, transform.position.y, validFrontPos.z);
-            isDrag = false;
-        }
-        else if (transform.position.z < validBackPos.z - 0.3f)
-        {
-            targetPosition = new Vector3(transform.position.x, transform.position.y, validBackPos.z);
-            isDrag = false;
-        }
-        else if (transform.position.x > validFrontPos.x + 0.3f)
-        {
-            targetPosition = new Vector3(validFrontPos.x, transform.position.y, transform.position.z);
-            isDrag = false;
-        }
-        else if (transform.position.x < validBackPos.x - 0.3f)
-        {
-            targetPosition = new Vector3(validBackPos.x, transform.position.y, transform.position.z);
-            isDrag = false;
+            switch (orientation)
+            {
+                case Orientation.NORTH:
+                    if (transform.position.z > validFrontPos.z + 0.3f)
+                    {
+                        targetPosition = new Vector3(transform.position.x, transform.position.y, validFrontPos.z);
+                        isDrag = false;
+                    }
+                    else if (transform.position.z < validBackPos.z - 0.3f)
+                    {
+                        targetPosition = new Vector3(transform.position.x, transform.position.y, validBackPos.z);
+                        isDrag = false;
+                    }
+                    break;
+                case Orientation.SOUTH:
+                    if (transform.position.z < validFrontPos.z - 0.3f)
+                    {
+                        targetPosition = new Vector3(transform.position.x, transform.position.y, validFrontPos.z);
+                        isDrag = false;
+                    }
+                    else if (transform.position.z > validBackPos.z + 0.3f)
+                    {
+                        targetPosition = new Vector3(transform.position.x, transform.position.y, validBackPos.z);
+                        isDrag = false;
+                    }
+                    break;
+                case Orientation.EAST:
+                    if (transform.position.x > validFrontPos.x + 0.3f)
+                    {
+                        targetPosition = new Vector3(validFrontPos.x, transform.position.y, transform.position.z);
+                        isDrag = false;
+                    }
+                    else if (transform.position.x < validBackPos.x - 0.3f)
+                    {
+                        targetPosition = new Vector3(validBackPos.x, transform.position.y, transform.position.z);
+                        isDrag = false;
+                    }
+                    break;
+                case Orientation.WEST:
+                    if (transform.position.x < validFrontPos.x - 0.3f)
+                    {
+                        targetPosition = new Vector3(validFrontPos.x, transform.position.y, transform.position.z);
+                        isDrag = false;
+                    }
+                    else if (transform.position.x > validBackPos.x + 0.3f)
+                    {
+                        targetPosition = new Vector3(validBackPos.x, transform.position.y, transform.position.z);
+                        isDrag = false;
+                    }
+                    break;
+            }
         }
     }
 
@@ -99,6 +133,8 @@ public class CarMovement : MonoBehaviour
 
         Ray ray = GetScreenPointToRay();
 
+
+
         if (clickPlane.Raycast(ray, out planeDistance) && isDrag == true)
         {
             MoveCar(ray.GetPoint(planeDistance));
@@ -110,12 +146,26 @@ public class CarMovement : MonoBehaviour
         if (!inputEnabled)
             return;
 
-        if (isDrag == true)
+
+        switch (orientation)
         {
-            GotoValidPosition();
+            case Orientation.NORTH:
+                validBackPos = Vector3.negativeInfinity;
+                validFrontPos = Vector3.positiveInfinity;
+                break;
+            case Orientation.SOUTH:
+                validBackPos = Vector3.positiveInfinity;
+                validFrontPos = Vector3.negativeInfinity;
+                break;
+            case Orientation.EAST:
+                validBackPos = Vector3.negativeInfinity;
+                validFrontPos = Vector3.positiveInfinity;
+                break;
+            case Orientation.WEST:
+                validBackPos = Vector3.positiveInfinity;
+                validFrontPos = Vector3.negativeInfinity;
+                break;
         }
-        validBackPos = Vector3.negativeInfinity;
-        validFrontPos = Vector3.positiveInfinity;
     }
 
     public void DisablePlayerInput()
@@ -126,7 +176,7 @@ public class CarMovement : MonoBehaviour
     void GetValidMoveRange()
     {
         Ray ray = new Ray();
-        ray.origin = transform.position;
+        ray.origin = transform.position + new Vector3(0, 0.2f, 0);
         RaycastHit hit;
         LayerMask wallMask = LayerMask.GetMask("Wall");
 
@@ -149,6 +199,11 @@ public class CarMovement : MonoBehaviour
 
     void ShowValidMoveRange()
     {
+        Gizmos.color = Color.red;
+        Ray ray = GetScreenPointToRay();
+        float distance = 100f;
+        Debug.DrawRay(ray.origin, ray.direction * distance, Color.green);
+
         if (validBackPos != Vector3.negativeInfinity)
         {
             Gizmos.color = Color.blue;
@@ -170,23 +225,29 @@ public class CarMovement : MonoBehaviour
 
     void MoveCar(Vector3 screenPosition)
     {
+
         Vector3 offsetPosition = screenPosition + clickOffset;
         Vector3 lockedPosition = LockPositionToLocalForwardAxis(offsetPosition);
         Vector3 clampedPosition = ClampToValidPosition(lockedPosition);
         Vector3 gridPosition;
 
-        if (offsetPosition.z < validFrontPos.z + 0.3f || offsetPosition.z > validBackPos.z - 0.3f || offsetPosition.x > validBackPos.x - 0.3f || offsetPosition.x < validFrontPos.x + 0.3f)
+        if (((offsetPosition.z > validFrontPos.z + 0.3f || offsetPosition.z < validBackPos.z - 0.3f) && orientation == Orientation.NORTH)
+        || ((offsetPosition.z < validFrontPos.z - 0.3f || offsetPosition.z > validBackPos.z + 0.3f) && orientation == Orientation.SOUTH)
+        || ((offsetPosition.x > validBackPos.x - 0.3f || offsetPosition.x < validFrontPos.x + 0.3f) && orientation == Orientation.EAST)
+        || ((offsetPosition.x < validBackPos.x + 0.3f || offsetPosition.x > validFrontPos.x - 0.3f) && orientation == Orientation.WEST))
         {
             print(offsetPosition);
             Vector3 clampedPosition2 = ClampToBouncePosition(lockedPosition);
             gridPosition = SnapToGrid(clampedPosition2);
+            targetPosition = gridPosition;
 
         }
         else
         {
             gridPosition = SnapToGrid(clampedPosition);
+            targetPosition = gridPosition;
         }
-        targetPosition = gridPosition;
+
     }
 
     Vector3 LockPositionToLocalForwardAxis(Vector3 pos)
@@ -231,16 +292,16 @@ public class CarMovement : MonoBehaviour
         switch (orientation)
         {
             case Orientation.NORTH:
-                pos.z = Mathf.Clamp(pos.z, validBackPos.z - 0.5f, validFrontPos.z + 1f);
+                pos.z = Mathf.Clamp(pos.z, validBackPos.z - 1f, validFrontPos.z + 1f);
                 break;
             case Orientation.SOUTH:
-                pos.z = Mathf.Clamp(pos.z, validFrontPos.z - 0.5f, validBackPos.z + 1f);
+                pos.z = Mathf.Clamp(pos.z, validFrontPos.z - 1f, validBackPos.z + 1f);
                 break;
             case Orientation.EAST:
-                pos.x = Mathf.Clamp(pos.x, validBackPos.x - 0.5f, validFrontPos.x + 1f);
+                pos.x = Mathf.Clamp(pos.x, validBackPos.x - 1f, validFrontPos.x + 1f);
                 break;
             case Orientation.WEST:
-                pos.x = Mathf.Clamp(pos.x, validFrontPos.x - 0.5f, validBackPos.x + 1f);
+                pos.x = Mathf.Clamp(pos.x, validFrontPos.x - 1f, validBackPos.x + 1f);
                 break;
         }
 
