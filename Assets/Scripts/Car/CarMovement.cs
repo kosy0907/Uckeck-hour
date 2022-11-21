@@ -15,8 +15,8 @@ public class CarMovement : MonoBehaviour
     Vector3 gridOffset = Vector3.zero;
     Orientation orientation;
 
-    Vector3 validBackPos = Vector3.negativeInfinity;
-    Vector3 validFrontPos = Vector3.positiveInfinity;
+    public Vector3 validBackPos = Vector3.negativeInfinity;
+    public Vector3 validFrontPos = Vector3.positiveInfinity;
 
     Vector3 targetPosition;
     Vector3 velocity = Vector3.zero;
@@ -37,30 +37,34 @@ public class CarMovement : MonoBehaviour
 
     void Update()
     {
-        GotoValidPosition();
+        if (isDrag == true)
+        {
+            GotoValidPosition();
+        }
+
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
     }
 
     void GotoValidPosition()
     {
-        if (transform.position.z > validFrontPos.z + 0.25f)
+        if (transform.position.z > validFrontPos.z + 0.3f)
         {
-            targetPosition = new Vector3(transform.position.x, transform.position.y, validFrontPos.z - 0.5f);
+            targetPosition = new Vector3(transform.position.x, transform.position.y, validFrontPos.z);
             isDrag = false;
         }
-        else if (transform.position.z < validBackPos.z - 0.25f)
+        else if (transform.position.z < validBackPos.z - 0.3f)
         {
-            targetPosition = new Vector3(transform.position.x, transform.position.y, validBackPos.z + 0.5f);
+            targetPosition = new Vector3(transform.position.x, transform.position.y, validBackPos.z);
             isDrag = false;
         }
-        else if (transform.position.x > validFrontPos.x + 0.25f)
+        else if (transform.position.x > validFrontPos.x + 0.3f)
         {
-            targetPosition = new Vector3(validFrontPos.x - 0.5f, transform.position.y, transform.position.z);
+            targetPosition = new Vector3(validFrontPos.x, transform.position.y, transform.position.z);
             isDrag = false;
         }
-        else if (transform.position.x < validBackPos.x - 0.25f)
+        else if (transform.position.x < validBackPos.x - 0.3f)
         {
-            targetPosition = new Vector3(validBackPos.x + 0.5f, transform.position.y, transform.position.z);
+            targetPosition = new Vector3(validBackPos.x, transform.position.y, transform.position.z);
             isDrag = false;
         }
     }
@@ -82,9 +86,10 @@ public class CarMovement : MonoBehaviour
             clickOffset = transform.position - ray.GetPoint(planeDistance);
         }
 
-        isDrag = true;
+
 
         GetValidMoveRange();
+        isDrag = true;
     }
 
     void OnMouseDrag()
@@ -94,39 +99,9 @@ public class CarMovement : MonoBehaviour
 
         Ray ray = GetScreenPointToRay();
 
-        if (isDrag == true)
+        if (clickPlane.Raycast(ray, out planeDistance) && isDrag == true)
         {
-
-            if (clickPlane.Raycast(ray, out planeDistance))
-            {
-                MoveCar(ray.GetPoint(planeDistance));
-                Vector3 offsetPosition = ray.GetPoint(planeDistance) + clickOffset;
-
-                print(offsetPosition);
-                Vector3 lockedPosition = LockPositionToLocalForwardAxis(offsetPosition);
-
-                switch (orientation)
-                {
-                    case Orientation.NORTH:
-                    case Orientation.SOUTH:
-                        if (offsetPosition.z > 0 || offsetPosition.z < 0)
-                        {
-                            print("Check");
-                            Vector3 bouncePosition = SnapToGrid(ClampToBouncePosition(lockedPosition));
-                            targetPosition = bouncePosition;
-                        }
-                        break;
-                    case Orientation.EAST:
-                    case Orientation.WEST:
-                        if (offsetPosition.x > 0 || offsetPosition.x < 0)
-                        {
-                            Vector3 bouncePosition = SnapToGrid(ClampToBouncePosition(lockedPosition));
-                            targetPosition = bouncePosition;
-                            return;
-                        }
-                        break;
-                }
-            }
+            MoveCar(ray.GetPoint(planeDistance));
         }
     }
 
@@ -135,8 +110,10 @@ public class CarMovement : MonoBehaviour
         if (!inputEnabled)
             return;
 
-        GotoValidPosition();
-
+        if (isDrag == true)
+        {
+            GotoValidPosition();
+        }
         validBackPos = Vector3.negativeInfinity;
         validFrontPos = Vector3.positiveInfinity;
     }
@@ -196,7 +173,19 @@ public class CarMovement : MonoBehaviour
         Vector3 offsetPosition = screenPosition + clickOffset;
         Vector3 lockedPosition = LockPositionToLocalForwardAxis(offsetPosition);
         Vector3 clampedPosition = ClampToValidPosition(lockedPosition);
-        Vector3 gridPosition = SnapToGrid(clampedPosition);
+        Vector3 gridPosition;
+
+        if (offsetPosition.z < validFrontPos.z + 0.3f || offsetPosition.z > validBackPos.z - 0.3f || offsetPosition.x > validBackPos.x - 0.3f || offsetPosition.x < validFrontPos.x + 0.3f)
+        {
+            print(offsetPosition);
+            Vector3 clampedPosition2 = ClampToBouncePosition(lockedPosition);
+            gridPosition = SnapToGrid(clampedPosition2);
+
+        }
+        else
+        {
+            gridPosition = SnapToGrid(clampedPosition);
+        }
         targetPosition = gridPosition;
     }
 
