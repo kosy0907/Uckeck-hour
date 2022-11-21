@@ -45,22 +45,22 @@ public class CarMovement : MonoBehaviour
     {
         if (transform.position.z > validFrontPos.z + 0.25f)
         {
-            targetPosition = new Vector3(transform.position.x, transform.position.y, validFrontPos.z);
+            targetPosition = new Vector3(transform.position.x, transform.position.y, validFrontPos.z - 0.5f);
             isDrag = false;
         }
         else if (transform.position.z < validBackPos.z - 0.25f)
         {
-            targetPosition = new Vector3(transform.position.x, transform.position.y, validBackPos.z);
+            targetPosition = new Vector3(transform.position.x, transform.position.y, validBackPos.z + 0.5f);
             isDrag = false;
         }
         else if (transform.position.x > validFrontPos.x + 0.25f)
         {
-            targetPosition = new Vector3(validFrontPos.x, transform.position.y, transform.position.z);
+            targetPosition = new Vector3(validFrontPos.x - 0.5f, transform.position.y, transform.position.z);
             isDrag = false;
         }
         else if (transform.position.x < validBackPos.x - 0.25f)
         {
-            targetPosition = new Vector3(validBackPos.x, transform.position.y, transform.position.z);
+            targetPosition = new Vector3(validBackPos.x + 0.5f, transform.position.y, transform.position.z);
             isDrag = false;
         }
     }
