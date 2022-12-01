@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 [RequireComponent(typeof(BoxCollider))]
 public class CarMovement : MonoBehaviour
@@ -17,6 +16,8 @@ public class CarMovement : MonoBehaviour
 
     public Vector3 validBackPos = Vector3.negativeInfinity;
     public Vector3 validFrontPos = Vector3.positiveInfinity;
+
+    public Vector3 clearPosition = Vector3.positiveInfinity;
 
     Vector3 targetPosition;
     Vector3 velocity = Vector3.zero;
@@ -40,6 +41,11 @@ public class CarMovement : MonoBehaviour
         if (isDrag == true)
         {
             GotoValidPosition();
+            if (transform.position == clearPosition)
+            {
+                print("Clear");
+                EditorApplication.isPaused = true;
+            }
         }
 
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
@@ -120,9 +126,8 @@ public class CarMovement : MonoBehaviour
             clickOffset = transform.position - ray.GetPoint(planeDistance);
         }
 
-
-
         GetValidMoveRange();
+        checkClear();
         isDrag = true;
     }
 
@@ -173,10 +178,15 @@ public class CarMovement : MonoBehaviour
         inputEnabled = false;
     }
 
+    void checkClear()
+    {
+        clearPosition = new Vector3(-1, 0, 7f);
+    }
+
     void GetValidMoveRange()
     {
         Ray ray = new Ray();
-        ray.origin = transform.position + new Vector3(0, 0.2f, 0);
+        ray.origin = transform.position + new Vector3(0, 0.5f, 0);
         RaycastHit hit;
         LayerMask wallMask = LayerMask.GetMask("Wall");
 
@@ -199,10 +209,28 @@ public class CarMovement : MonoBehaviour
 
     void ShowValidMoveRange()
     {
+
+        float maxDistance = 100;
+        RaycastHit hit;
+        Gizmos.color = Color.blue;
+        // Physics.Raycast (레이저를 발사할 위치, 발사 방향, 충돌 결과, 최대 거리)
+        bool isHit = Physics.Raycast(transform.position + new Vector3(0, 0.5f, 0), transform.forward, out hit, maxDistance);
+
         Gizmos.color = Color.red;
-        Ray ray = GetScreenPointToRay();
-        float distance = 100f;
-        Debug.DrawRay(ray.origin, ray.direction * distance, Color.green);
+        if (isHit)
+        {
+            Gizmos.DrawRay(transform.position, transform.forward * hit.distance);
+        }
+        else
+        {
+            Gizmos.DrawRay(transform.position, transform.forward * maxDistance);
+        }
+
+        if (clearPosition != Vector3.positiveInfinity)
+        {
+            Gizmos.color = Color.gray;
+            Gizmos.DrawWireSphere(clearPosition, .25f);
+        }
 
         if (validBackPos != Vector3.negativeInfinity)
         {
