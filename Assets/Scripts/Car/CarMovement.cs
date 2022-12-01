@@ -4,6 +4,7 @@ using UnityEditor;
 [RequireComponent(typeof(BoxCollider))]
 public class CarMovement : MonoBehaviour
 {
+    GameManagerController gameManagerController;
 
     Plane clickPlane = new Plane(Vector3.up, Vector3.zero);
     public float planeDistance = 0f;
@@ -29,6 +30,7 @@ public class CarMovement : MonoBehaviour
 
     void Start()
     {
+        gameManagerController = GameObject.Find("GameManager").GetComponent<GameManagerController>();
         col = GetComponent<BoxCollider>();
         targetPosition = transform.position;
 
@@ -43,6 +45,7 @@ public class CarMovement : MonoBehaviour
             GotoValidPosition();
             if (transform.position == clearPosition)
             {
+                gameManagerController.clearGame();
                 print("Clear");
                 EditorApplication.isPaused = true;
             }
