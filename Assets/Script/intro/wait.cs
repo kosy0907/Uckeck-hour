@@ -15,7 +15,12 @@ public class wait : MonoBehaviour
     IEnumerator Wait() 
     {
         yield return new WaitForSeconds(wait_time);
-
-        SceneManager.LoadScene(1);
+        Debug.Log(PlayerPrefs.HasKey("Nickname"));
+        if(PlayerPrefs.HasKey("Nickname")){
+            SceneManager.LoadScene(0);
+        }
+        else{
+            SceneManager.LoadScene(1);
+        }
     }
 }

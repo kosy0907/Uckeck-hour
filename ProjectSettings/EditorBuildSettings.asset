@@ -9,12 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/TitleMain.unity
     guid: df506b0ffd7528b4ba648c5243f03620
   - enabled: 1
-    path: Assets/Scenes/Level_1.unity
-    guid: d89bcaec9d3897d43973f82968efeff3
-  - enabled: 1
-    path: Assets/Scenes/Tmp_Shop.unity
-    guid: 8b4263af6b53d52459b58afe98824f9b
-  - enabled: 1
-    path: Assets/Scenes/Tmp_Ranking.unity
-    guid: 49a33ed7b92c00f459e63492ba02c6dc
+    path: Assets/Scenes/NicknameScence.unity
+    guid: f7c2e502abb64d940acf26ca3b03d6eb
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   m_configObjects: {}

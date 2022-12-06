@@ -4,6 +4,7 @@ using UnityEditor;
 [RequireComponent(typeof(BoxCollider))]
 public class CarMovement : MonoBehaviour
 {
+    GameManagerController gameManagerController;
 
     Plane clickPlane = new Plane(Vector3.up, Vector3.zero);
     public float planeDistance = 0f;
@@ -29,6 +30,7 @@ public class CarMovement : MonoBehaviour
 
     void Start()
     {
+        gameManagerController = GameObject.Find("GameManager").GetComponent<GameManagerController>();
         col = GetComponent<BoxCollider>();
         targetPosition = transform.position;
 
@@ -41,8 +43,9 @@ public class CarMovement : MonoBehaviour
         if (isDrag == true)
         {
             GotoValidPosition();
-            if (transform.position == clearPosition)
+            if (transform.position.z > 6.5 || transform.position.x > 6.5)
             {
+                gameManagerController.clearGame();
                 print("Clear");
                 EditorApplication.isPaused = true;
             }
@@ -186,7 +189,7 @@ public class CarMovement : MonoBehaviour
     void GetValidMoveRange()
     {
         Ray ray = new Ray();
-        ray.origin = transform.position + new Vector3(0, 0.5f, 0);
+        ray.origin = transform.position;
         RaycastHit hit;
         LayerMask wallMask = LayerMask.GetMask("Wall");
 
@@ -349,10 +352,8 @@ public class CarMovement : MonoBehaviour
 
     void SetOrientation()
     {
-        Vector3 localFwd = Utils.RoundVector(transform.forward);
-        Vector3 worldFwd = Utils.RoundVector(Vector3.forward);
-
-        float angle = Vector3.SignedAngle(worldFwd, localFwd, Vector3.up);
+        float angle = this.GetComponent<Transform>().eulerAngles.y;
+        print(angle);
 
         if (angle == 0)
             orientation = Orientation.NORTH;
@@ -368,10 +369,12 @@ public class CarMovement : MonoBehaviour
             case Orientation.NORTH:
             case Orientation.SOUTH:
                 carHalfSize = col.bounds.extents.z;
+                print(col.bounds.extents.z);
                 break;
             case Orientation.EAST:
             case Orientation.WEST:
                 carHalfSize = col.bounds.extents.x;
+                print(col.bounds.extents.x);
                 break;
         }
     }
