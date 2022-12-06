@@ -43,7 +43,7 @@ public class CarMovement : MonoBehaviour
         if (isDrag == true)
         {
             GotoValidPosition();
-            if (transform.position == clearPosition)
+            if (transform.position.z > 7)
             {
                 gameManagerController.clearGame();
                 print("Clear");
