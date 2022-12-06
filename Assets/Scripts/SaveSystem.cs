@@ -63,7 +63,40 @@ public static class SaveSystem
             return data;
         } else
         {
+            StarsData data = new StarsData(0);
+            SaveStars(0);
             Debug.Log("파일 없음");
+            return data;
+        }
+    }
+
+    public static void SaveMyCar (string resourceName)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = Application.persistentDataPath + "/mycar.fun";
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        MyCarData data = new MyCarData(resourceName);
+
+        formatter.Serialize(stream, data);
+        stream.Close();
+    }
+
+    public static StarsData LoadMyCar()
+    {
+        string path = Application.persistentDataPath + "/mycar.fun";
+        if (File.Exists(path))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.Open);
+
+            StarsData data = formatter.Deserialize(stream) as StarsData;
+            stream.Close();
+
+            return data;
+        } else
+        {
+            Debug.Log("구매 이력 없음");
             return null;
         }
     }
