@@ -41,7 +41,7 @@ public class CarMovement : MonoBehaviour
         if (isDrag == true)
         {
             GotoValidPosition();
-            if (transform.position == clearPosition)
+            if (transform.position.z > 7)
             {
                 print("Clear");
                 EditorApplication.isPaused = true;

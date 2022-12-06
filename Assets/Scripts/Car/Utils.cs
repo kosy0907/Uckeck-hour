@@ -6,9 +6,9 @@ public class Utils
     public static Vector3 RoundVector(Vector3 v)
     {
         return new Vector3(
-          Mathf.Round(v.x),
-          Mathf.Round(v.y),
-          Mathf.Round(v.z)
+          Mathf.Round(v.x * 2) / 2,
+          Mathf.Round(v.y * 2) / 2,
+          Mathf.Round(v.z * 2) / 2
         );
     }
 }
