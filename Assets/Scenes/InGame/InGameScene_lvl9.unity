@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.35458246, g: 0.74879974, b: 0.9668138, a: 1}
+  m_IndirectSpecularColor: {r: 0.3584372, g: 0.7542183, b: 0.9684588, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -732,7 +732,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.85607076, z: 2.3}
+  m_Size: {x: 1, y: 1.4, z: 2.3}
   m_Center: {x: 0, y: 0.4358467, z: -0.13812643}
 --- !u!114 &99911862
 MonoBehaviour:
@@ -1293,7 +1293,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.85607076, z: 2.3}
+  m_Size: {x: 1, y: 1.4, z: 2.3}
   m_Center: {x: 0, y: 0.4358467, z: -0.13812643}
 --- !u!4 &285118023
 Transform:
@@ -2890,7 +2890,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.85607076, z: 2.3}
+  m_Size: {x: 1, y: 1.4, z: 2.3}
   m_Center: {x: 0, y: 0.4358467, z: -0.13812643}
 --- !u!4 &575622149
 Transform:
@@ -4770,7 +4770,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.85607076, z: 2.3}
+  m_Size: {x: 1, y: 1.4, z: 2.3}
   m_Center: {x: 0, y: 0.4358467, z: -0.13812643}
 --- !u!4 &929445108
 Transform:
@@ -5046,7 +5046,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.85607076, z: 2.3}
+  m_Size: {x: 1, y: 1.4, z: 2.3}
   m_Center: {x: 0, y: 0.4358467, z: -0.13812643}
 --- !u!4 &955774884
 Transform:
@@ -7279,7 +7279,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.85607076, z: 2.3}
+  m_Size: {x: 1, y: 1.4, z: 2.3}
   m_Center: {x: 0, y: 0.4358467, z: -0.13812643}
 --- !u!4 &1461461585
 Transform:
@@ -7571,7 +7571,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.85607076, z: 2.3}
+  m_Size: {x: 1, y: 1.4, z: 2.3}
   m_Center: {x: 0, y: 0.4358467, z: -0.13812643}
 --- !u!4 &1524673614
 Transform:
@@ -9477,7 +9477,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.85607076, z: 2.3}
+  m_Size: {x: 1, y: 1.4, z: 2.3}
   m_Center: {x: 0, y: 0.4358467, z: -0.13812643}
 --- !u!4 &1952827592
 Transform:

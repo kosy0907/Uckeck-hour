@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -35,7 +34,7 @@ public class GameManagerController : MonoBehaviour
         Scene scene = SceneManager.GetActiveScene();
 
 
-        level = int.Parse(scene.name.Substring(scene.name.Length-1, 1));
+        level = int.Parse(scene.name.Substring(scene.name.Length - 1, 1));
 
         isClear = false;
         count = 0;
@@ -61,35 +60,39 @@ public class GameManagerController : MonoBehaviour
         GameObject userCarObject = Resources.Load<GameObject>(carName);
         userCarObject.AddComponent<BoxCollider>();
         userCarObject.AddComponent<CarMovement>();
-        
+
         Transform userCarTransform = userCarObject.GetComponent<Transform>();
 
         Transform carPosition = GameObject.Find("Car_4").GetComponent<Transform>();
         Destroy(GameObject.Find("Car_4"));
 
         userCarTransform.position = carPosition.position;
+        userCarTransform.rotation = carPosition.rotation;
         Instantiate(userCarObject);
     }
 
     IEnumerator CountRoutine()
     {
-        while(true)
+        while (true)
         {
             yield return new WaitForSeconds(0.1f);
             count += 1;
         }
     }
 
-    public void OnClickHomeButton() {
+    public void OnClickHomeButton()
+    {
         SceneManager.LoadScene("TitleMain");
     }
 
-    public void OnClickNextButton() {
+    public void OnClickNextButton()
+    {
         Debug.Log("클릭");
         SceneManager.LoadScene("InGameScene_lvl" + (level + 1).ToString());
     }
 
-    public void clearGame() {
+    public void clearGame()
+    {
         setLevel();
         calcClearTime();
         calcStars();
@@ -98,14 +101,17 @@ public class GameManagerController : MonoBehaviour
         isClear = true;
 
         saveGame();
-        
+
     }
 
-    public void saveGame() {
-        if (previousData == null) {
+    public void saveGame()
+    {
+        if (previousData == null)
+        {
             SaveSystem.SaveStage(this);
             saveStars(stars);
-        } else
+        }
+        else
         {
             if (previousData.clearCount > count)
             {
@@ -116,26 +122,32 @@ public class GameManagerController : MonoBehaviour
 
     }
 
-    public void saveStars(int amount) {
+    public void saveStars(int amount)
+    {
         StarsData totalStars = SaveSystem.LoadStars();
-        if (totalStars != null) 
+        if (totalStars != null)
         {
             SaveSystem.SaveStars(totalStars.stars + amount);
-        } else {
+        }
+        else
+        {
             SaveSystem.SaveStars(amount);
         }
     }
 
-    public void calcClearTime() {
+    public void calcClearTime()
+    {
         StopCoroutine("CountRoutine");
         timeText.text = (count / 600).ToString("00") + " : " + (count / 10).ToString("00");
     }
 
-    public void setLevel() {
+    public void setLevel()
+    {
         levelText.text = "Level " + level.ToString();
     }
 
-    public void calcStars() {
+    public void calcStars()
+    {
         if (count < 100)
         {
             stars = 3;
@@ -146,7 +158,7 @@ public class GameManagerController : MonoBehaviour
             stars = 2;
             starsImage.fillAmount = 0.7f;
         }
-        else 
+        else
         {
             stars = 1;
             starsImage.fillAmount = 0.3f;
