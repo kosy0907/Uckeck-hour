@@ -10,7 +10,7 @@ public class GameManagerController : MonoBehaviour
     public StageData previousData;
     public Text timeText;
     public Text levelText;
-    public Button retryButton;
+    public Button homeButton;
     public Button nextButton;
     public Image starsImage;
     public int count;
@@ -24,16 +24,15 @@ public class GameManagerController : MonoBehaviour
         timeText = GameObject.Find("Time_text").GetComponent<Text>();
         levelText = GameObject.Find("Level_text").GetComponent<Text>();
         starsImage = GameObject.Find("Stars_Image").GetComponent<Image>();
-        retryButton = GameObject.Find("Retry_Button").GetComponent<Button>();
+        homeButton = GameObject.Find("Home_Button").GetComponent<Button>();
         nextButton = GameObject.Find("Next_Button").GetComponent<Button>();
         winPanelCanvasObject = GameObject.Find("PanelCanvas");
         winPanelCanvasObject.SetActive(false);
 
-        retryButton.onClick.AddListener(OnClickRetryButton);
+        homeButton.onClick.AddListener(OnClickHomeButton);
         nextButton.onClick.AddListener(OnClickNextButton);
 
         Scene scene = SceneManager.GetActiveScene();
-        Debug.Log(scene.name);
 
 
         level = int.Parse(scene.name.Substring(scene.name.Length-1, 1));
@@ -58,14 +57,17 @@ public class GameManagerController : MonoBehaviour
         {
             carName = mycar.resourceName;
         }
-        Debug.Log(mycar);
-        Debug.Log(carName);
+
         GameObject userCarObject = Resources.Load<GameObject>(carName);
         userCarObject.AddComponent<BoxCollider>();
         userCarObject.AddComponent<CarMovement>();
         
         Transform userCarTransform = userCarObject.GetComponent<Transform>();
-        userCarTransform.position = new Vector3(-1.5f, 0, -2);
+
+        Transform carPosition = GameObject.Find("Car_4").GetComponent<Transform>();
+        Destroy(GameObject.Find("Car_4"));
+
+        userCarTransform.position = carPosition.position;
         Instantiate(userCarObject);
     }
 
@@ -75,16 +77,16 @@ public class GameManagerController : MonoBehaviour
         {
             yield return new WaitForSeconds(0.1f);
             count += 1;
-            // Debug.Log(count);
         }
     }
 
-    public void OnClickRetryButton() {
-        SceneManager.LoadScene("InGameScene_lvl3");
+    public void OnClickHomeButton() {
+        SceneManager.LoadScene("TitleMain");
     }
 
     public void OnClickNextButton() {
-        SceneManager.LoadScene("InGameScene_lvl4");
+        Debug.Log("클릭");
+        SceneManager.LoadScene("InGameScene_lvl" + (level + 1).ToString());
     }
 
     public void clearGame() {
@@ -92,6 +94,7 @@ public class GameManagerController : MonoBehaviour
         calcClearTime();
         calcStars();
         winPanelCanvasObject.SetActive(true);
+
         isClear = true;
 
         saveGame();
