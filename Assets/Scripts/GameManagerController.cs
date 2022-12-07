@@ -18,10 +18,12 @@ public class GameManagerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        createUserCar();
         timeText = GameObject.Find("Time_text").GetComponent<Text>();
         levelText = GameObject.Find("Level_text").GetComponent<Text>();
         starsImage = GameObject.Find("Stars").GetComponent<Image>();
         winPanelCanvasObject = GameObject.Find("PanelCanvas");
+        Debug.Log(winPanelCanvasObject);
         winPanelCanvasObject.SetActive(false);
 
         level = 1;
@@ -32,6 +34,18 @@ public class GameManagerController : MonoBehaviour
         previousData = SaveSystem.LoadStage(level.ToString());
 
         StartCoroutine("CountRoutine");
+    }
+
+    void createUserCar()
+    {
+        GameObject userCarObject = Resources.Load<GameObject>("item_0");
+        userCarObject.AddComponent<BoxCollider>();
+        userCarObject.AddComponent<CarMovement>();
+        
+        Transform userCarTransform = userCarObject.GetComponent<Transform>();
+        userCarTransform.position = new Vector3(-1.5f, 0, -2);
+        Instantiate(userCarObject);
+
     }
 
     IEnumerator CountRoutine()
