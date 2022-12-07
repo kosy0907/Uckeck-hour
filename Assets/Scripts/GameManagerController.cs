@@ -124,12 +124,12 @@ public class GameManagerController : MonoBehaviour
     }
 
     public void calcStars() {
-        if (count < 100)
+        if (count < 50)
         {
             stars = 3;
             starsImage.fillAmount = 1;
         }
-        else if (count < 300)
+        else if (count < 100)
         {
             stars = 2;
             starsImage.fillAmount = 0.7f;
