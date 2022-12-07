@@ -38,7 +38,19 @@ public class GameManagerController : MonoBehaviour
 
     void createUserCar()
     {
-        GameObject userCarObject = Resources.Load<GameObject>("item_0");
+        MyCarData mycar = SaveSystem.LoadMyCar();
+        string carName;
+        if (mycar == null)
+        {
+            carName = "default";
+        }
+        else
+        {
+            carName = mycar.resourceName;
+        }
+        Debug.Log(mycar);
+        Debug.Log(carName);
+        GameObject userCarObject = Resources.Load<GameObject>(carName);
         userCarObject.AddComponent<BoxCollider>();
         userCarObject.AddComponent<CarMovement>();
         
