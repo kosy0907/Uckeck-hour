@@ -57,14 +57,17 @@ public class GameManagerController : MonoBehaviour
         {
             carName = mycar.resourceName;
         }
-        Debug.Log(mycar);
-        Debug.Log(carName);
+
         GameObject userCarObject = Resources.Load<GameObject>(carName);
         userCarObject.AddComponent<BoxCollider>();
         userCarObject.AddComponent<CarMovement>();
         
         Transform userCarTransform = userCarObject.GetComponent<Transform>();
-        userCarTransform.position = new Vector3(-1.5f, 0, -2);
+
+        Transform carPosition = GameObject.Find("Car_4").GetComponent<Transform>();
+        Destroy(GameObject.Find("Car_4"));
+
+        userCarTransform.position = carPosition.position;
         Instantiate(userCarObject);
     }
 
