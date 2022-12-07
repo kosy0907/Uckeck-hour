@@ -198,13 +198,13 @@ public class CarMovement : MonoBehaviour
         ray.direction = transform.forward;
         if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity, wallMask))
         {
-            validFrontPos = Utils.RoundVector(hit.point - transform.forward * carHalfSize);
+            validFrontPos = Utils.RoundVector(hit.point - transform.forward * carHalfSize, carHalfSize);
         }
 
         ray.direction = -transform.forward;
         if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity, wallMask))
         {
-            validBackPos = Utils.RoundVector(hit.point + transform.forward * carHalfSize);
+            validBackPos = Utils.RoundVector(hit.point + transform.forward * carHalfSize, carHalfSize);
         }
 
         col.enabled = true;
@@ -295,7 +295,7 @@ public class CarMovement : MonoBehaviour
                 break;
         }
 
-        return Utils.RoundVector(pos);
+        return Utils.RoundVector(pos, carHalfSize);
     }
 
     Vector3 ClampToValidPosition(Vector3 pos)
@@ -316,7 +316,7 @@ public class CarMovement : MonoBehaviour
                 break;
         }
 
-        return Utils.RoundVector(pos);
+        return Utils.RoundVector(pos, carHalfSize);
     }
     Vector3 ClampToBouncePosition(Vector3 pos)
     {
@@ -336,7 +336,7 @@ public class CarMovement : MonoBehaviour
                 break;
         }
 
-        return Utils.RoundVector(pos);
+        return Utils.RoundVector(pos, carHalfSize);
     }
 
     Vector3 SnapToGrid(Vector3 pos)
@@ -347,7 +347,7 @@ public class CarMovement : MonoBehaviour
           Mathf.Floor(pos.z) + gridOffset.z
         );
 
-        return Utils.RoundVector(gridPosition);
+        return Utils.RoundVector(gridPosition, carHalfSize);
     }
 
     void SetOrientation()
