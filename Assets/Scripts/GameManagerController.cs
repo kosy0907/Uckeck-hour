@@ -10,6 +10,8 @@ public class GameManagerController : MonoBehaviour
     public StageData previousData;
     public Text timeText;
     public Text levelText;
+    public Button retryButton;
+    public Button nextButton;
     public Image starsImage;
     public int count;
     public int level;
@@ -21,12 +23,20 @@ public class GameManagerController : MonoBehaviour
         createUserCar();
         timeText = GameObject.Find("Time_text").GetComponent<Text>();
         levelText = GameObject.Find("Level_text").GetComponent<Text>();
-        starsImage = GameObject.Find("Stars").GetComponent<Image>();
+        starsImage = GameObject.Find("Stars_Image").GetComponent<Image>();
+        retryButton = GameObject.Find("Retry_Button").GetComponent<Button>();
+        nextButton = GameObject.Find("Next_Button").GetComponent<Button>();
         winPanelCanvasObject = GameObject.Find("PanelCanvas");
-        Debug.Log(winPanelCanvasObject);
         winPanelCanvasObject.SetActive(false);
 
-        level = 1;
+        retryButton.onClick.AddListener(OnClickRetryButton);
+        nextButton.onClick.AddListener(OnClickNextButton);
+
+        Scene scene = SceneManager.GetActiveScene();
+        Debug.Log(scene.name);
+
+
+        level = int.Parse(scene.name.Substring(scene.name.Length-1, 1));
 
         isClear = false;
         count = 0;
@@ -57,7 +67,6 @@ public class GameManagerController : MonoBehaviour
         Transform userCarTransform = userCarObject.GetComponent<Transform>();
         userCarTransform.position = new Vector3(-1.5f, 0, -2);
         Instantiate(userCarObject);
-
     }
 
     IEnumerator CountRoutine()
@@ -71,11 +80,11 @@ public class GameManagerController : MonoBehaviour
     }
 
     public void OnClickRetryButton() {
-        SceneManager.LoadScene("test1");
+        SceneManager.LoadScene("InGameScene_lvl3");
     }
 
     public void OnClickNextButton() {
-        SceneManager.LoadScene("test1");
+        SceneManager.LoadScene("InGameScene_lvl4");
     }
 
     public void clearGame() {
