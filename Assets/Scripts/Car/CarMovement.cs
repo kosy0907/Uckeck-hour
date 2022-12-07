@@ -47,7 +47,7 @@ public class CarMovement : MonoBehaviour
             {
                 gameManagerController.clearGame();
                 print("Clear");
-                EditorApplication.isPaused = true;
+                // EditorApplication.isPaused = true;
             }
         }
 
