@@ -21,7 +21,7 @@ public class GameManagerController : MonoBehaviour
         createUserCar();
         timeText = GameObject.Find("Time_text").GetComponent<Text>();
         levelText = GameObject.Find("Level_text").GetComponent<Text>();
-        starsImage = GameObject.Find("Stars").GetComponent<Image>();
+        starsImage = GameObject.Find("Stars_Image").GetComponent<Image>();
         winPanelCanvasObject = GameObject.Find("PanelCanvas");
         Debug.Log(winPanelCanvasObject);
         winPanelCanvasObject.SetActive(false);
@@ -124,12 +124,12 @@ public class GameManagerController : MonoBehaviour
     }
 
     public void calcStars() {
-        if (count < 50)
+        if (count < 100)
         {
             stars = 3;
             starsImage.fillAmount = 1;
         }
-        else if (count < 100)
+        else if (count < 300)
         {
             stars = 2;
             starsImage.fillAmount = 0.7f;
@@ -139,6 +139,8 @@ public class GameManagerController : MonoBehaviour
             stars = 1;
             starsImage.fillAmount = 0.3f;
         }
+        Debug.Log(stars);
+        Debug.Log(starsImage);
 
     }
 

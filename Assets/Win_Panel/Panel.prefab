@@ -254,7 +254,7 @@ GameObject:
   - component: {fileID: 7978852044674733220}
   - component: {fileID: 1451759717008910659}
   m_Layer: 5
-  m_Name: Stars
+  m_Name: Stars_Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -309,11 +309,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: ec62219e36ff0b94ab5294be2b103cb1, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
+  m_FillMethod: 0
+  m_FillAmount: 0.273
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
