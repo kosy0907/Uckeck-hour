@@ -15,7 +15,6 @@ public class StoreManagerController : MonoBehaviour
     {
         coinText = GameObject.Find("coin_text").GetComponent<Text>();
         stars = SaveSystem.LoadStars().stars;
-        stars = 2;
         Debug.Log(stars);
 
         coinText.text = "coin: " + stars.ToString();
@@ -67,5 +66,9 @@ public class StoreManagerController : MonoBehaviour
         {
             Debug.Log("돈 부족");
         }
+    }
+
+    public void moveToHomeScene() {
+        SceneManager.LoadScene("TitleMain");
     }
 }
