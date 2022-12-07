@@ -7,8 +7,8 @@ public class MyCarData
 {
     public string resourceName;
 
-    public MyCarData (string resourceName)
+    public MyCarData (string name)
     {
-        resourceName = resourceName;
+        resourceName = name;
     }
 }

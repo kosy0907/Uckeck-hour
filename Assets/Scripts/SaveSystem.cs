@@ -82,7 +82,7 @@ public static class SaveSystem
         stream.Close();
     }
 
-    public static StarsData LoadMyCar()
+    public static MyCarData LoadMyCar()
     {
         string path = Application.persistentDataPath + "/mycar.fun";
         if (File.Exists(path))
@@ -90,7 +90,7 @@ public static class SaveSystem
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
 
-            StarsData data = formatter.Deserialize(stream) as StarsData;
+            MyCarData data = formatter.Deserialize(stream) as MyCarData;
             stream.Close();
 
             return data;
