@@ -9,18 +9,42 @@ EditorBuildSettings:
     path: Assets/Scenes/TitleMain.unity
     guid: df506b0ffd7528b4ba648c5243f03620
   - enabled: 1
-    path: Assets/Scenes/NicknameScence.unity
+    path: Assets/Scenes/NicknameScene.unity
     guid: f7c2e502abb64d940acf26ca3b03d6eb
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/InGame/InGameScene_lvl3.unity
-    guid: f3667b873d943704cad2deb5a5b64b84
+    path: Assets/Scenes/RankingScene.unity
+    guid: fcaf55160f734e947bb48e9111bdf513
   - enabled: 1
     path: Assets/Scenes/StoreScene.unity
     guid: 8e0ecbd96040c4cbe9ae33178eb66999
   - enabled: 1
+    path: Assets/Scenes/InGame/InGameScene_lvl1.unity
+    guid: 5558a11a25ba6ba489f2ec61842ef63b
+  - enabled: 1
+    path: Assets/Scenes/InGame/InGameScene_lvl2.unity
+    guid: 407099966e31bb944b56f964ac4836a1
+  - enabled: 1
+    path: Assets/Scenes/InGame/InGameScene_lvl3.unity
+    guid: f3667b873d943704cad2deb5a5b64b84
+  - enabled: 1
     path: Assets/Scenes/InGame/InGameScene_lvl4.unity
     guid: 12a6547df0fa1f041b0c7d09ea34acca
+  - enabled: 1
+    path: Assets/Scenes/InGame/InGameScene_lvl5.unity
+    guid: cdb3dbc0b5eb90241b4bb3ebdbbece83
+  - enabled: 1
+    path: Assets/Scenes/InGame/InGameScene_lvl6.unity
+    guid: fbece7d1e9f56e24d8963af356fa8143
+  - enabled: 1
+    path: Assets/Scenes/InGame/InGameScene_lvl7.unity
+    guid: af5c8ae4f4b30d64093ec8e08375f9d8
+  - enabled: 1
+    path: Assets/Scenes/InGame/InGameScene_lvl8.unity
+    guid: 7204b31af02041848839f30e41bcdd5c
+  - enabled: 1
+    path: Assets/Scenes/InGame/InGameScene_lvl9.unity
+    guid: f0d4d21dfe270b04788dff4ec4b5eca0
+  - enabled: 1
+    path: Assets/Scenes/InGame/InGameScene_lvl10.unity
+    guid: 650609e6f57265540a7f563e2bf06504
   m_configObjects: {}

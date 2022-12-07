@@ -17,15 +17,15 @@ public class MainMenu : MonoBehaviour
     public void Play()
     {
         // SceneManager.LoadScene(1); // build setting 내의 scene idx
-         SceneManager.LoadScene("Level_1");
+         SceneManager.LoadScene("InGameScene_lvl1");
     }
     public void Shop()
     {
-        SceneManager.LoadScene("Tmp_Shop");
+        SceneManager.LoadScene("StoreScene");
     }
     public void Ranking()
     {
-        SceneManager.LoadScene("Tmp_Ranking");
+        SceneManager.LoadScene("RankingScene");
     }
     public void goMain()
     {
